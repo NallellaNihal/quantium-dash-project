@@ -1,11 +1,45 @@
-from dash import Dash, html
+import pandas as pd
+from dash import Dash, html, dcc
+import plotly.express as px
 
+# Load formatted data
+df = pd.read_csv("formatted_sales_data.csv")
+
+# Convert date column to datetime
+df["date"] = pd.to_datetime(df["date"])
+
+# Group sales by date
+sales_by_date = df.groupby("date")["sales"].sum().reset_index()
+
+# Sort by date
+sales_by_date = sales_by_date.sort_values("date")
+
+# Create line chart
+fig = px.line(
+    sales_by_date,
+    x="date",
+    y="sales",
+    title="Pink Morsel Sales Before and After Price Increase",
+    labels={
+        "date": "Date",
+        "sales": "Sales"
+    }
+)
+
+# Create Dash app
 app = Dash(__name__)
 
 app.layout = html.Div([
-    html.H1("Quantium Dash Task"),
-    html.P("Dash environment configured successfully.")
+    html.H1(
+        "Soul Foods Pink Morsel Sales Visualiser",
+        style={"textAlign": "center"}
+    ),
+
+    dcc.Graph(
+        figure=fig
+    )
 ])
 
+# Run app
 if __name__ == "__main__":
     app.run(debug=True)
