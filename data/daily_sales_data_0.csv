@@ -1,0 +1,6 @@
+product,quantity,price,date,region
+pink morsel,10,$2.50,2021-01-02,north
+green morsel,5,$1.50,2021-01-02,south
+pink morsel,8,$3.00,2021-01-03,east
+blue morsel,4,$2.00,2021-01-04,west
+pink morsel,12,$2.75,2021-01-05,north
